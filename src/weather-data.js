@@ -1,13 +1,13 @@
 // Create class that represents weather data
 export default class WeatherData {
   // properties:
-  // location, datetime, conditions, humidity, windspeed, temp(may change based on chart)
-  constructor({ location, datetime, conditions, humidity, windspeed, temp }) {
-    this.location = location;
+  //  datetime, conditions, humidity, windspeed, temp, days(daily data)
+  constructor({ datetime, conditions, humidity, windspeed, temp, days = [] }) {
     this.datetime = datetime;
     this.conditions = conditions;
     this.humidity = humidity;
     this.windspeed = windspeed;
     this.temp = temp;
+    this.days = days;
   }
 }

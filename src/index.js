@@ -11,26 +11,31 @@ class IfRain {
 
   async fetchWeatherData() {
     const response = await fetch(
-      `${this.API_URL}${this.location}?key=${this.API_KEY}&unitGroup=metric&elements=datetime,conditions,humidity,windspeed,temp`
+      `${this.API_URL}${this.location}/next4days?key=${this.API_KEY}&unitGroup=metric&elements=datetime,conditions,humidity,windspeed,temp`
     );
 
     const data = await response.json();
     console.log(data);
 
     const weatherData = new WeatherData({
-      location: data.address,
       datetime: data.currentConditions.datetime,
       conditions: data.currentConditions.conditions,
       humidity: data.currentConditions.humidity,
       windspeed: data.currentConditions.windspeed,
       temp: data.currentConditions.temp,
+      days: data.days,
     });
 
-    console.log(weatherData);
+    return weatherData;
+  }
+
+  async getWeatherForDay(dayIndex) {
+    const data = await this.fetchWeatherData();
+    const weatherData = new WeatherData({ ...data.days[dayIndex] }); // fetch weather for a specific day
 
     return weatherData;
   }
 }
 
 const app = new IfRain('Mandaluyong');
-const weatherData = app.fetchWeatherData();
+app.getTomorrow();
