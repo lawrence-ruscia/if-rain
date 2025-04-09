@@ -21,6 +21,7 @@
     "@eslint/js": "^9.20.0",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
+    "dotenv-webpack": "^8.1.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-node": "^4.1.0",
