@@ -3,19 +3,20 @@ import WeatherData from './weather-data';
 class IfRain {
   // properties:
   // location from which the user wants to get weather data from
-  constructor(location) {
+  constructor(location = 'london', unit = 'us') {
     this.location = location;
+    this.unit = unit;
     this.API_URL = process.env.API_URL;
     this.API_KEY = process.env.API_KEY;
   }
 
   async fetchWeatherData() {
+    // TODO: Create separate function for configuring API call
     const response = await fetch(
-      `${this.API_URL}${this.location}/next4days?key=${this.API_KEY}&unitGroup=metric&elements=datetime,conditions,humidity,windspeed,temp`
+      `${this.API_URL}${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`
     );
 
     const data = await response.json();
-    console.log(data);
 
     const weatherData = new WeatherData({
       datetime: data.currentConditions.datetime,
@@ -35,7 +36,13 @@ class IfRain {
 
     return weatherData;
   }
+
+  async getTomorrow() {
+    const weatherData = await this.getWeatherForDay(1);
+    console.log(weatherData);
+    return weatherData;
+  }
 }
 
-const app = new IfRain('Mandaluyong');
+const app = new IfRain('Mandaluyong', 'metric');
 app.getTomorrow();
