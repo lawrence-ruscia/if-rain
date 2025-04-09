@@ -10,12 +10,8 @@ class IfRain {
     this.API_KEY = process.env.API_KEY;
   }
 
-  async fetchWeatherData() {
-    // TODO: Create separate function for configuring API call
-    const response = await fetch(
-      `${this.API_URL}${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`
-    );
-
+  async #fetchWeatherData() {
+    const response = await fetch(this.#buildRequest());
     const data = await response.json();
 
     const weatherData = new WeatherData({
@@ -30,8 +26,12 @@ class IfRain {
     return weatherData;
   }
 
+  #buildRequest() {
+    return `${this.API_URL}${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`;
+  }
+
   async getWeatherForDay(dayIndex) {
-    const data = await this.fetchWeatherData();
+    const data = await this.#fetchWeatherData();
     const weatherData = new WeatherData({ ...data.days[dayIndex] }); // fetch weather for a specific day
 
     return weatherData;
@@ -39,7 +39,6 @@ class IfRain {
 
   async getTomorrow() {
     const weatherData = await this.getWeatherForDay(1);
-    console.log(weatherData);
     return weatherData;
   }
 }
