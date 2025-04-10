@@ -10,9 +10,11 @@ class IfRain {
     this.API_KEY = process.env.API_KEY;
   }
 
-  async #fetchWeatherData() {
+  async fetchWeatherData() {
     const response = await fetch(this.#buildRequest());
     const data = await response.json();
+
+    console.log(data);
 
     const weatherData = new WeatherData({
       datetime: data.currentConditions.datetime,
@@ -27,11 +29,11 @@ class IfRain {
   }
 
   #buildRequest() {
-    return `${this.API_URL}${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`;
+    return `${this.API_URL}/${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`;
   }
 
   async getWeatherForDay(dayIndex) {
-    const data = await this.#fetchWeatherData();
+    const data = await this.fetchWeatherData();
     const weatherData = new WeatherData({ ...data.days[dayIndex] }); // fetch weather for a specific day
 
     return weatherData;
@@ -44,4 +46,4 @@ class IfRain {
 }
 
 const app = new IfRain('Mandaluyong', 'metric');
-app.getTomorrow();
+app.fetchWeatherData();
