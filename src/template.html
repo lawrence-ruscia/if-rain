@@ -14,10 +14,7 @@
           <img class="search-icon" src="./assets/icons/search.svg" alt="" />
         </form>
         <div class="weather__units">
-          <button class="weather__unit weather__unit--celcius">&deg;C</button>
-          <button class="weather__unit weather__unit--farehnheit">
-            &deg;F
-          </button>
+          <button class="weather__unit" data-unit="celcius">&deg;C</button>
         </div>
       </div>
       <!-- Header Start -->
@@ -32,11 +29,20 @@
         <div class="weather__icon">
           <img src="https://openweathermap.org/img/wn/04d@4x.png" alt="" />
         </div>
-        <div class="weather__temp">
-          <p class="unit">11&deg;</p>
+        <div class="weather__temp-container">
+          <div class="weather__temp">
+            <p class="weather__temp-value">
+              <span class="value">11</span>&deg;
+            </p>
+          </div>
+
           <div class="weather__temp-minmax">
-            <p class="weather__temp--min">Min: 10&deg;</p>
-            <p class="weather__temp--max">Max: 12&deg;</p>
+            <p class="weather__temp--min">
+              Min: <span class="value">10</span>&deg;
+            </p>
+            <p class="weather__temp--max">
+              Max: <span class="value">12</span>&deg;
+            </p>
           </div>
         </div>
       </div>
@@ -48,7 +54,9 @@
           <img src="./assets/icons/temperature.svg" alt="" />
           <div class="weather__card-info">
             <p class="title">Feels Like</p>
-            <p class="weather__feels-like">11&deg;</p>
+            <p class="weather__feels-like">
+              <span class="value">11</span>&deg;
+            </p>
           </div>
         </div>
 
@@ -56,7 +64,7 @@
           <img src="./assets/icons/humidity.svg" alt="" />
           <div class="weather__card-info">
             <p class="title">Humidity</p>
-            <p class="weather__humidity">93%</p>
+            <p class="weather__humidity"><span class="value">93</span>%</p>
           </div>
         </div>
 
@@ -64,7 +72,7 @@
           <img src="./assets/icons/wind.svg" alt="" />
           <div class="weather__card-info">
             <p class="title">Wind</p>
-            <p class="weather__wind">6.16 m/s</p>
+            <p class="weather__wind"><span class="value">6.16</span></p>
           </div>
         </div>
 
@@ -72,7 +80,7 @@
           <img src="./assets/icons/pressure.svg" alt="" />
           <div class="weather__card-info">
             <p class="title">Pressure</p>
-            <p class="weather__pressure">996 hPa</p>
+            <p class="weather__pressure"><span class="value">996</span> hPa</p>
           </div>
         </div>
       </div>
