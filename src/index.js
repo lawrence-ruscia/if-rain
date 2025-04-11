@@ -11,7 +11,7 @@ class IfRain {
     this.location = location;
     this.unit = unit;
     this.API_URL = process.env.API_URL;
-    this.API_KEY = process.env.API_KEY;
+    this.API_KEY2 = process.env.API_KEY;
     this.DOMElements = DOMElements;
     this.weatherUI = new WeatherUI(DOMElements, this.location);
   }
@@ -76,7 +76,7 @@ class IfRain {
   }
 
   #buildRequest(unit) {
-    return `${this.API_URL}/${this.location}/next7days?key=${this.API_KEY}&unitGroup=${unit}`;
+    return `${this.API_URL}/${this.location}/next7days?key=RDC9J9RJ4NWW9RQ2KYD8V2X84&unitGroup=${unit}`;
   }
 
   async getWeatherForDay(dayIndex, unit = this.unit) {
@@ -92,6 +92,7 @@ class IfRain {
 const city = document.querySelector('.weather__city');
 const datetime = document.querySelector('.weather__datetime > p');
 const condition = document.querySelector('.weather__condition > p');
+const icon = document.querySelector('.weather__icon > img');
 const temp = document.querySelector('.weather__temp-value .value');
 const tempMin = document.querySelector('.weather__temp--min > .value');
 const tempMax = document.querySelector('.weather__temp--max > .value');
@@ -104,6 +105,7 @@ const DOMElements = {
   city,
   datetime,
   condition,
+  icon,
   temp,
   tempMin,
   tempMax,
@@ -114,5 +116,5 @@ const DOMElements = {
   weatherUnit,
 };
 
-const app = new IfRain(DOMElements, 'Mandaluyong, Hulo', 'us');
-app.init();
+const app = new IfRain(DOMElements, 'Greenland', 'us');
+// app.init();
