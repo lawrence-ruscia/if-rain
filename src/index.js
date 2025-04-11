@@ -21,6 +21,7 @@ class IfRain {
 
     this.weatherUI.displayWeatherData(weatherDataToday, this.unit);
     this.handleUnitChange(weatherDataToday);
+    this.handleCitySearch(weatherDataToday);
   }
 
   async handleUnitChange() {
@@ -28,11 +29,13 @@ class IfRain {
       const { target } = e;
 
       const { unit } = target.dataset;
-      const unitGroup = unit === 'farenheit' ? 'us' : 'metric';
+
+      // Update unit
+      this.unit = unit === 'farenheit' ? 'us' : 'metric';
 
       console.log('fetching weather data...');
-      const weatherData = await this.getWeatherForDay(0, unitGroup);
-      this.weatherUI.displayWeatherData(weatherData, unitGroup);
+      const weatherData = await this.getWeatherForDay(0, this.unit);
+      this.weatherUI.displayWeatherData(weatherData, this.unit);
       console.log('data displayed!');
 
       const { text, newUnit } = this.toggleUnitBtnText(target);
@@ -87,8 +90,24 @@ class IfRain {
 
     return weatherData;
   }
+
+  async handleCitySearch() {
+    this.DOMElements.form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const location = this.DOMElements.cityInput.value;
+
+      // update location
+      this.location = location;
+
+      const weatherData = await this.getWeatherForDay(0);
+      this.weatherUI.displayWeatherData(weatherData, this.unit);
+    });
+  }
 }
 
+const form = document.querySelector('#weather__form');
+const cityInput = document.querySelector('#city');
 const city = document.querySelector('.weather__city');
 const datetime = document.querySelector('.weather__datetime > p');
 const condition = document.querySelector('.weather__condition > p');
@@ -102,6 +121,8 @@ const windSpeed = document.querySelector('.weather__wind > .value');
 const pressure = document.querySelector('.weather__pressure > .value');
 const weatherUnit = document.querySelector('.weather__unit');
 const DOMElements = {
+  form,
+  cityInput,
   city,
   datetime,
   condition,
