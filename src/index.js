@@ -29,7 +29,7 @@ class IfRain {
   }
 
   #buildRequest() {
-    return `${this.API_URL}/${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}&elements=datetime,conditions,humidity,windspeed,temp`;
+    return `${this.API_URL}/${this.location}/next7days?key=${this.API_KEY}&unitGroup=${this.unit}`;
   }
 
   async getWeatherForDay(dayIndex) {
