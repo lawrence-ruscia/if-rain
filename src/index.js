@@ -1,3 +1,5 @@
+import 'normalize.css';
+import './style.css';
 import WeatherData from './weather-data';
 // Create class for weather app for fetching data, displaying, etc.
 class IfRain {
