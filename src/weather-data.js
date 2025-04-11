@@ -1,6 +1,8 @@
 // Create class that represents weather data
 export default class WeatherData {
   constructor({
+    address,
+    timezone,
     datetime,
     conditions,
     icon,
@@ -12,6 +14,8 @@ export default class WeatherData {
     windspeed,
     pressure,
   }) {
+    this.address = address;
+    this.timezone = timezone;
     this.datetime = datetime;
     this.conditions = conditions;
     this.icon = icon;

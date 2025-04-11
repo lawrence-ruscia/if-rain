@@ -1,12 +1,12 @@
 // Handles displaying of weather data
 export default class WeatherUI {
-  constructor(DOMElements, location) {
+  constructor(DOMElements) {
     this.DOMElements = DOMElements;
-    this.location = location;
   }
 
   async displayWeatherData(weatherData, unitGroup) {
-    this.DOMElements.city.textContent = this.location;
+    this.DOMElements.city.textContent = weatherData.address;
+    this.DOMElements.datetime.textContent = this.getDateTime(weatherData);
     this.DOMElements.condition.textContent = weatherData.conditions;
     this.DOMElements.icon.src = this.getWeatherIcon(weatherData.icon);
     this.DOMElements.temp.textContent = weatherData.temp;
@@ -22,6 +22,22 @@ export default class WeatherUI {
 
     this.DOMElements.weatherUnit.innerHTML =
       unitGroup === 'us' ? '&deg;F' : '&deg;C';
+  }
+
+  getDateTime(weatherData) {
+    const date = new Date(weatherData.datetime);
+
+    const formatted = new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    }).format(date);
+
+    return formatted;
   }
 
   getWeatherIcon(iconGroup) {

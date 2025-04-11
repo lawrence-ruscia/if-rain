@@ -67,13 +67,17 @@ class IfRain {
 
     console.log(data);
 
+    // TODO: Move this to another function
+    const time = data.currentConditions.datetime;
+    const date = data.days[0].datetime;
+    const convertedDateTime = new Date(`${date}T${time}`);
+
     const weatherData = {
+      datetime: convertedDateTime,
       address: data.address,
       currentConditions: data.currentConditions,
       days: data.days,
     };
-
-    console.log(weatherData);
 
     return weatherData;
   }
@@ -85,7 +89,8 @@ class IfRain {
   async getWeatherForDay(dayIndex, unit = this.unit) {
     const data = await this.fetchWeatherData(unit);
 
-    const weatherData = new WeatherData({ ...data.days[dayIndex] }); // fetch weather for a specific day
+    // NOTE: The order here matters, since the latter object overrides the datetime of the previous
+    const weatherData = new WeatherData({ ...data.days[dayIndex], ...data }); // fetch weather for a specific day
     console.log(weatherData);
 
     return weatherData;
@@ -95,13 +100,15 @@ class IfRain {
     this.DOMElements.form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const location = this.DOMElements.cityInput.value;
+      const location = this.DOMElements.cityInput;
+      const locationValue = location.value;
 
       // update location
-      this.location = location;
+      this.location = locationValue;
 
       const weatherData = await this.getWeatherForDay(0);
       this.weatherUI.displayWeatherData(weatherData, this.unit);
+      location.value = ''; // clear input after
     });
   }
 }
@@ -138,4 +145,4 @@ const DOMElements = {
 };
 
 const app = new IfRain(DOMElements, 'Greenland', 'us');
-// app.init();
+app.init();
