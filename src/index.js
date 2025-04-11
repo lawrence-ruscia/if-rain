@@ -16,14 +16,13 @@ class IfRain {
 
     console.log(data);
 
-    const weatherData = new WeatherData({
-      datetime: data.currentConditions.datetime,
-      conditions: data.currentConditions.conditions,
-      humidity: data.currentConditions.humidity,
-      windspeed: data.currentConditions.windspeed,
-      temp: data.currentConditions.temp,
+    const weatherData = {
+      address: data.address,
+      currentConditions: data.currentConditions,
       days: data.days,
-    });
+    };
+
+    console.log(weatherData);
 
     return weatherData;
   }
@@ -35,15 +34,17 @@ class IfRain {
   async getWeatherForDay(dayIndex) {
     const data = await this.fetchWeatherData();
     const weatherData = new WeatherData({ ...data.days[dayIndex] }); // fetch weather for a specific day
+    console.log(weatherData);
 
     return weatherData;
   }
 
-  async getTomorrow() {
-    const weatherData = await this.getWeatherForDay(1);
+  async getWeatherForToday() {
+    const weatherData = await this.getWeatherForDay(0);
+
     return weatherData;
   }
 }
 
 const app = new IfRain('Mandaluyong', 'metric');
-app.fetchWeatherData();
+app.getWeatherForToday();
