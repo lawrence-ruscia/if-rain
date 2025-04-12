@@ -10,8 +10,9 @@ class IfRain {
   constructor(DOMElements, location = 'london', unit = 'us') {
     this.location = location;
     this.unit = unit;
-    this.API_URL = process.env.API_URL;
-    this.API_KEY2 = process.env.API_KEY;
+    this.API_URL =
+      'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline';
+    this.API_KEY = 'RDC9J9RJ4NWW9RQ2KYD8V2X84';
     this.DOMElements = DOMElements;
     this.weatherUI = new WeatherUI(DOMElements, this.location);
   }
@@ -83,7 +84,7 @@ class IfRain {
   }
 
   #buildRequest(unit) {
-    return `${this.API_URL}/${this.location}/next7days?key=RDC9J9RJ4NWW9RQ2KYD8V2X84&unitGroup=${unit}`;
+    return `${this.API_URL}/${this.location}/next7days?key=${this.API_KEY}&unitGroup=${unit}`;
   }
 
   async getWeatherForDay(dayIndex, unit = this.unit) {
@@ -144,5 +145,5 @@ const DOMElements = {
   weatherUnit,
 };
 
-const app = new IfRain(DOMElements, 'Greenland', 'us');
+const app = new IfRain(DOMElements, 'London, United Kingdom', 'us');
 app.init();
